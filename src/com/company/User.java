@@ -3,40 +3,41 @@ package com.company;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private static int counter = 0;
     private int id = 999999999;
     private String username = "null";
     private String password = "null";
     private String name = "null";
     private String surname = "null";
     private int phonenumber = 0;
+    private boolean isAdmin = false;
 
-    public void save() {
-
-        FileWriter fw;
-        {
-            try {
-                fw = new FileWriter("src/database/Users.txt");
-                fw.write("{id: " + id + " username: " + username + " password: " + password + " name: " + name + " surname: " + surname + " phonenumber: " + phonenumber  + "}\n");
-                fw.flush();
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public User() {
+        this.id = ++counter;
     }
 
-    public User(int id, String username, String password, String name, String surname, int phonenumber) {
-        this.id = id;
+    public User(String username, String password, String name, String surname, int phonenumber) {
+        this.id = ++counter;
         this.username = username;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.phonenumber = phonenumber;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public int getId() {
@@ -85,5 +86,18 @@ public class User {
 
     public void setPhonenumber(int phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phonenumber=" + phonenumber +
+                ", isAdmin=" + isAdmin +
+                '}';
     }
 }
